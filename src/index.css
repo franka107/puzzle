@@ -1,13 +1,304 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,body{
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+}
+.fondo{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: #A3D6DB;
+	width: 100%;
+	height: 100%;
+	animation-name: fondo;
+	animation-duration: 20s;
+	animation-iteration-count: infinite;
+
+}
+.sol{ 
+	background: #FFA500;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	left: -110px;
+	top: 30%;
+	border-radius: 100px;
+	box-shadow: 0px 0px 0px 10px rgba(255,140,0,0.5);
+	animation-name: sol;
+	animation-duration: 20s;
+	animation-iteration-count:infinite;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.nubes{
+	background-image: url(./assets/images/fondo1.png);
+	background-repeat: repeat-x;
+	position: absolute; 
+	top: 10%;
+	left: 0px;
+	width: 100%;
+	height: 174px;	
+	animation-name: nubes;
+	animation-duration: 10s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+
+}
+
+.ciudad{
+	background-image: url(./assets/images/ciudad.png);
+	background-repeat: repeat-x;
+	background-position: 0px 100%;
+	position: absolute; 
+	top: 10%;
+	left: 0px;
+	width: 100%;
+	height: 90%;	
+	animation-name: ciudad;
+	animation-duration: 30s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+.bici{ 
+	width: 145px; 
+	height: 80px;
+	position: absolute;
+	bottom: 9%;
+	left: 50%;
+	text-align: center;
+}
+
+.bici .marco{ 
+	background-image: url(./assets/images/marcobici.png);
+	width: 98px;
+	height: 56px;
+	display: inline-block;
+	z-index: 2;
+	position: relative;
+}
+
+.bici .llanta{ 
+	background-image: url(./assets/images/llanta.png);
+	width: 55px;
+	height: 56px;
+	display: inline-block;
+	position: absolute;
+	animation-name: llantas;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+ 
+}
+.bici .llanta.llan1{
+	top: 27px;
+	left: 0px;
+	z-index: 0;
+}
+.bici .llanta.llan2{
+	top: 30px;
+	right: 0px;
+	z-index: 4;
+}
+
+input[type=radio]{ position: relative; z-index: 100; display: none; }
+.button{
+	position: relative;
+	z-index: 100;
+	cursor: pointer;
+	background:#1f1f1f;
+	display: inline-block;
+	padding: 12px 15px;	
+	height: 24px; 
+	width: 15px;
+	background-repeat: no-repeat;
+}
+.button.btn1{ 
+	background-image: url(./assets/images/play.png); 
+	background-repeat: no-repeat;
+	background-position: -50px;
+}
+.button.btn2{ 
+	background-image: url(./assets/images/play.png); 
+	background-repeat: no-repeat;
+	background-position: 0px;
+}
+.button.btn3{ 
+	background-image: url(./assets/images/play.png); 
+	background-repeat: no-repeat;
+	background-position: -100px;
+}
+#play:checked ~ .btn1{
+	background-color: #fafad2;
+}
+#pause:checked ~ .btn2{
+	background-color: #fafad2;
+}
+#stop:checked ~ .btn3{
+	background-color: #fafad2;
+}
+@keyframes sol{
+	0%{ left: -110px; top: 30%; }
+	50%{ left: 50%; top: 5%; background: #FF4500; }
+	100%{ left: calc(100% + 10px); top: 30%; background: #bee2e6; box-shadow: 0px 0px 0px 10px rgba(73,92,95,0.5); }
+}
+
+@keyframes fondo{
+	50%{ background: #A3D6DB; }
+	100%{ background: #103D42; }
+}
+
+@keyframes nubes{
+	from{ background-position: 0 0; }
+	to{ background-position: 100% 0; }
+}
+@keyframes ciudad{
+	from{ background-position: 0 100%; }
+	to{ background-position: 100% 100%; }
+}
+
+@keyframes llantas{
+	from{ transform: rotate(0deg); }
+	to{ transform: rotate(360deg); }
+}
+
+
+#pause:checked ~ .sol{
+	animation-name: sol;
+	animation-play-state: paused;
+}
+
+#pause:checked ~ .fondo{
+	animation-name: fondo;
+	animation-play-state: paused;
+}
+#pause:checked ~ .nubes{
+	animation-name: nubes;
+	animation-play-state: paused;
+}
+#pause:checked ~ .ciudad{
+	animation-name: ciudad;
+	animation-play-state: paused;
+}
+#pause:checked ~ .bici .llanta{
+	animation-name: llantas;
+	animation-play-state: paused;
+}
+
+
+#play:checked ~ .sol{
+	animation-name: sol;
+	animation-play-state: running;
+}
+
+#play:checked ~ .fondo{
+	animation-name: fondo;
+	animation-play-state: running;
+}
+#play:checked ~ .nubes{
+	animation-name: nubes;
+	animation-play-state: running;
+}
+#play:checked ~ .ciudad{
+	animation-name: ciudad;
+	animation-play-state: running;
+}
+#play:checked ~ .bici .llanta{
+	animation-name: llantas;
+	animation-play-state: running;
+}
+
+#stop:checked ~ .sol{
+	animation-name: stopSol;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+}
+
+#stop:checked ~ .fondo{
+	animation-name: stopFondo;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+}
+#stop:checked ~ .nubes{
+	animation-name: stopNubes;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+}
+
+#stop:checked ~ .ciudad{
+	animation-name: stopCiudad;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+}
+
+#stop:checked ~ .bici .llanta{
+	animation-name: stopLlantas;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+}
+
+
+@keyframes stopNubes{
+	from{ background-position: 0 0; }
+	to{ background-position: 0 0; }
+}
+@keyframes stopFondo{
+	from{ background: #A3D6DB; }
+	to{ background: #A3D6DB; }
+}
+
+@keyframes stopSol{
+	from{ left: -110px; }
+	to{ left: -110px; }
+}
+@keyframes stopCiudad{
+	from{ background-position: 0 100%; }
+	to{ background-position: 0 100%; }
+}
+@keyframes stopLlantas{
+	from{ transform: rotate(0deg); }
+	to{ transform: rotate(0deg); }
+}
+   
+.componentWrapper {
+    border: 2px solid black;
+    padding: 15px 10px 10px;
+    width: 65%;
+    border-radius: 5px;
+}
+
+.componentWrapper .header {
+    position:absolute;
+    margin-top:-30px;
+    margin-left:10px;
+    color:black;
+    background:white;
+    padding:2px 5px;
+}
+.input-register{
+    border: 2px solid black;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.members{
+    border-top: 2px solid black;
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-left: 100px;
+}
+.border-button{
+    box-shadow: 5px 10px #888888;
+}
+.introduction{
+    margin: auto 20%;
+}
+.padding-objetive{
+    padding-top: 70px;
+}
+.padding-introduction{
+    padding-top: 145px;
 }
