@@ -9,7 +9,12 @@ const Cell = (props) => {
   const y = Math.floor(position / level) * side
 
   return connectDropTarget(
-    <div className="piece">
+    <div
+      className="piece"
+      style={{
+        borderRadius: 0,
+      }}
+    >
       <Piece
         position={position}
         image={image}
@@ -22,7 +27,7 @@ const Cell = (props) => {
 
       <style>{`
         .piece:hover {
-          opacity: 0.8;
+          opacity: 1.5;
         }
       `}</style>
     </div>

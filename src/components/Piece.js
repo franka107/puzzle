@@ -10,7 +10,7 @@ const Piece = (props) => {
         width: `${side}px`,
         height: `${side}px`,
         margin: '0 -1px -1px',
-        border: '1px solid black',
+        border: '3px solid #8D8B81',
         backgroundImage: `url(${image})`,
         backgroundSize: `${size}px ${size}px`,
         backgroundPosition: `-${x}px -${y}px`,

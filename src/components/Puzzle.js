@@ -7,7 +7,7 @@ import { DndProvider } from 'react-dnd'
 /**
  * Shuffles the passed array and returns a new one
  *
- * @param  {Array} a
+ * @param  {Array}
  * @return {Array}
  */
 function shuffle(a) {
@@ -65,7 +65,6 @@ class Puzzle extends React.Component {
 
     if (done) {
       this.props.onDone()
-      console.log('gg')
     }
   }
 
@@ -101,6 +100,7 @@ class Puzzle extends React.Component {
             padding: 0,
             width: `${size}px`,
             height: `${size}px`,
+            // border: '2px solid #84D0D1',
           }}
         >
           {this.renderSquares()}

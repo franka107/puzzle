@@ -3,7 +3,11 @@ import useAudio from './hooks/useAudio'
 import { useEffect } from 'react'
 
 function App() {
-  const { play, hasInteracted } = useAudio('/media/song2.mp3')
+  const { play, hasInteracted } = useAudio({
+    src: '/media/song2.mp3',
+    volume: 0.3,
+    loop: true,
+  })
 
   useEffect(() => {
     play()
@@ -11,7 +15,22 @@ function App() {
 
   return (
     <div>
-      <AppRouter />
+      <div className="fondo">
+        <div className="content">
+          <AppRouter />
+        </div>
+      </div>
+      <div className="sol"></div>
+      <div className="nubes"></div>
+      <div className="ciudad"></div>
+      {/*
+      <div className="bici">
+        <div className="llanta llan1"></div>
+        <div className="marco"></div>
+        <div className="llanta llan2"></div>
+      </div>
+      
+      */}
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 
 import useInteraction from './useInteraction'
 
-export default function useAudio(soundPath) {
+export default function useAudio(options) {
   const hasInteracted = useInteraction()
   const audioRef = useRef()
 
@@ -12,11 +12,11 @@ export default function useAudio(soundPath) {
       return
     }
 
-    let audio = new Howl({ src: soundPath })
+    let audio = new Howl(options)
     audioRef.current = audio
 
     return () => audio.unload()
-  }, [hasInteracted, soundPath])
+  }, [hasInteracted, options])
 
   const play = () => audioRef.current?.play()
 

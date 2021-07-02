@@ -7,6 +7,21 @@ html,body{
 	height: 100%;
 	width: 100%;
 }
+
+#outer {
+  overflow: hidden;
+}
+
+#inner {
+  -moz-border-radius: 10px 10px 0 0;
+}
+
+.content {
+	z-index: 1000;
+	position: relative;
+	height: 100%;
+
+}
 .fondo{
 	position: absolute;
 	top: 0px;
@@ -103,33 +118,7 @@ html,body{
 	z-index: 4;
 }
 
-input[type=radio]{ position: relative; z-index: 100; display: none; }
-.button{
-	position: relative;
-	z-index: 100;
-	cursor: pointer;
-	background:#1f1f1f;
-	display: inline-block;
-	padding: 12px 15px;	
-	height: 24px; 
-	width: 15px;
-	background-repeat: no-repeat;
-}
-.button.btn1{ 
-	background-image: url(./assets/images/play.png); 
-	background-repeat: no-repeat;
-	background-position: -50px;
-}
-.button.btn2{ 
-	background-image: url(./assets/images/play.png); 
-	background-repeat: no-repeat;
-	background-position: 0px;
-}
-.button.btn3{ 
-	background-image: url(./assets/images/play.png); 
-	background-repeat: no-repeat;
-	background-position: -100px;
-}
+input[type=radio]{ position: relative; z-index: 1000; display: none; }
 #play:checked ~ .btn1{
 	background-color: #fafad2;
 }
@@ -301,4 +290,16 @@ input[type=radio]{ position: relative; z-index: 100; display: none; }
 }
 .padding-introduction{
     padding-top: 145px;
+}
+.game{
+	background-color: #454C53;
+	border: 3px solid #fff;
+	border-radius: 20px;
+	padding: 5% 0;
+	margin: 0 10%;
+}
+.content-game {
+	z-index: 1000;
+	position: relative;
+	margin-top: 5%;
 }
