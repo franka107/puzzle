@@ -1,20 +1,7 @@
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { useEffect, useState, useRef } from 'react'
-import Puzzle from '../components/Puzzle'
-import level1 from '../assets/images/nivel1.jpg'
-import level2 from '../assets/images/nivel2.jpg'
-import level3 from '../assets/images/nivel3.jpg'
-import level4 from '../assets/images/nivel4.jpg'
-import Timer from '../components/Timer'
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-  CustomInput,
-} from 'reactstrap'
 
-export default function LevelPage() {
+export default function Modal() {
   const questionAnswers = [
     [
       {
@@ -80,79 +67,14 @@ export default function LevelPage() {
       },
     ],
   ]
-  const [level, setLevel] = useState(2)
-  const [cont, setCont] = useState(0)
-  const [contInformation, setContInformation] = useState(0)
-  const [showModalInformation, setShowModalInformation] = useState(false)
-  const [showModalQuestions, setShowModalQuestions] = useState(false)
-  const [next, setNext] = useState(true)
-  const [qa] = useState(questionAnswers)
-  const timer = useRef(null)
-
-  const verify = () => {
-    setLevel(level + 1)
-    setShowModalInformation(true)
-    setNext(false)
-    timer.current.pauseTimer()
-  }
-
-  const nextLevel = () => {
-    setCont(cont + 1)
-    setContInformation(0)
-    setShowModalQuestions(false)
-    setNext(true)
-    timer.current.initTimer()
-  }
-
-  const nextContInformation = () => {
-    setContInformation(contInformation + 1)
-    setShowModalQuestions(false)
-  }
-
-  const questions = () => {
-    setShowModalInformation(false)
-    setShowModalQuestions(true)
-  }
+  const [qa, setQA] = useState(questionAnswers)
 
   return (
-    <div className="content-game">
-      <div className="d-flex justify-content-center game">
-        <div>
-          <div>
-            <Timer ref={timer} />
-          </div>
-          <div className="d-flex">
-            {level === 2 && next ? (
-              <Puzzle image={level1} onDone={verify} level={level} />
-            ) : (
-              <div
-                style={{
-                  height: '300px',
-                }}
-              ></div>
-            )}
-            {level === 3 && next ? (
-              <Puzzle image={level1} onDone={verify} level={level} />
-            ) : (
-              ''
-            )}
-            {level === 4 && next ? (
-              <Puzzle image={level1} onDone={verify} level={level} />
-            ) : (
-              ''
-            )}
-            {level === 5 && next ? (
-              <Puzzle image={level1} onDone={verify} level={level} />
-            ) : (
-              ''
-            )}
-          </div>
-        </div>
-      </div>
+    <div>
       <Modal
         centered
-        toggle={() => setShowModalInformation(!showModalInformation)}
-        isOpen={showModalInformation}
+        toggle={() => setShowModal(!showModal)}
+        isOpen={showModal}
         backdrop="static"
       >
         <ModalHeader>
@@ -161,72 +83,25 @@ export default function LevelPage() {
               color: '#000',
             }}
           >
-            Informacion
+            Modal title
           </div>
         </ModalHeader>
         <ModalBody>
-          <br />
-          <strong>{qa[cont][contInformation].title}</strong>
-          <br />
-          <br />
-          <div
-            style={{
-              textAlign: 'justify',
-            }}
-          >
-            <strong>Procedimiento</strong>
-            <div>{qa[cont][contInformation].process}</div>
-            <br />
-            <strong>Criterios</strong>
-            <div>{qa[cont][contInformation].criterion}</div>
-          </div>
-          <br />
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            color="primary"
-            type="button"
-            onClick={contInformation === 0 ? nextContInformation : questions}
-          >
-            {contInformation === 0 ? 'Siguiente' : 'Preguntas'}
-          </Button>
-        </ModalFooter>
-      </Modal>
-      <Modal
-        centered
-        toggle={() => setShowModalQuestions(!showModalQuestions)}
-        isOpen={showModalQuestions}
-        backdrop="static"
-      >
-        <ModalHeader>
-          <div
-            style={{
-              color: '#000',
-            }}
-          >
-            Informacion
-          </div>
-        </ModalHeader>
-        <ModalBody>
-          <strong>{qa[cont][0].title}</strong>
+          <strong>RESPUESTA DE LANDAU</strong>
           <div>
-            <CustomInput
-              type="select"
-              id="exampleCustomSelect"
-              name="customSelect"
-            >
-              <option value="">Select</option>
-              <option>Value 1</option>
-              <option>Value 2</option>
-              <option>Value 3</option>
-              <option>Value 4</option>
-              <option>Value 5</option>
-            </CustomInput>
+            Procedimiento: suspenda al niño en una posición prona proporcionando
+            apoyo en el abdomen alto con la palma de su mano. Ponga su otra mano
+            en la parte baja de la espalda del niño. Note la posición de la
+            cabeza del niño, tronco y piernas. Criterio: una respuesta completa
+            se ve a los 4.5 meses con la extensión de la cabeza, espalda y
+            piernas. Una respuesta incompleta se ve con la extensión solamente
+            de la cabeza o de la espalda. De los 6 a 7 meses, el niño puede
+            inhibir la contestación voluntaria.
           </div>
         </ModalBody>
         <ModalFooter>
           <Button color="primary" type="button" onClick={nextLevel}>
-            Preguntas
+            Save changes
           </Button>
         </ModalFooter>
       </Modal>
