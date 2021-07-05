@@ -4,6 +4,7 @@ import level1 from '../assets/images/nivel1.jpg'
 import level2 from '../assets/images/nivel2.jpg'
 import level3 from '../assets/images/nivel3.jpg'
 import level4 from '../assets/images/nivel4.jpg'
+import yoda from '../assets/images/yoda.gif'
 import Timer from '../components/Timer'
 import {
   Button,
@@ -11,7 +12,16 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  CustomInput,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  CardImg,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Col,
+  Row,
 } from 'reactstrap'
 
 export default function LevelPage() {
@@ -88,6 +98,17 @@ export default function LevelPage() {
   const [next, setNext] = useState(true)
   const [qa] = useState(questionAnswers)
   const timer = useRef(null)
+  const withWindow = window.innerWidth
+  const [size, setSize] = useState(500)
+
+  useEffect(() => {
+    if (withWindow > 390 && withWindow < 650) {
+      setSize(300)
+    }
+    if (withWindow > 650 && withWindow < 1200) {
+      setSize(400)
+    }
+  })
 
   const verify = () => {
     setLevel(level + 1)
@@ -123,26 +144,46 @@ export default function LevelPage() {
           </div>
           <div className="d-flex">
             {level === 2 && next ? (
-              <Puzzle image={level1} onDone={verify} level={level} />
+              <Puzzle
+                image={level1}
+                onDone={verify}
+                level={level}
+                size={size}
+              />
             ) : (
               <div
                 style={{
-                  height: '300px',
+                  height: `${size}px`,
                 }}
               ></div>
             )}
             {level === 3 && next ? (
-              <Puzzle image={level1} onDone={verify} level={level} />
+              <Puzzle
+                image={level2}
+                onDone={verify}
+                level={level}
+                size={size}
+              />
             ) : (
               ''
             )}
             {level === 4 && next ? (
-              <Puzzle image={level1} onDone={verify} level={level} />
+              <Puzzle
+                image={level3}
+                onDone={verify}
+                level={level}
+                size={size}
+              />
             ) : (
               ''
             )}
             {level === 5 && next ? (
-              <Puzzle image={level1} onDone={verify} level={level} />
+              <Puzzle
+                image={level4}
+                onDone={verify}
+                level={level}
+                size={size}
+              />
             ) : (
               ''
             )}
@@ -154,8 +195,9 @@ export default function LevelPage() {
         toggle={() => setShowModalInformation(!showModalInformation)}
         isOpen={showModalInformation}
         backdrop="static"
+        size="xl"
       >
-        <ModalHeader>
+        {/* <ModalHeader>
           <div
             style={{
               color: '#000',
@@ -169,7 +211,7 @@ export default function LevelPage() {
           <strong>{qa[cont][contInformation].title}</strong>
           <br />
           <br />
-          <div
+          <div  
             style={{
               textAlign: 'justify',
             }}
@@ -190,7 +232,60 @@ export default function LevelPage() {
           >
             {contInformation === 0 ? 'Siguiente' : 'Preguntas'}
           </Button>
-        </ModalFooter>
+        </ModalFooter> */}
+        <div
+          style={{
+            backgroundColor: '#111',
+            color: '#fff',
+            paddingRight: '20px',
+          }}
+        >
+          <Row>
+            <Col xs="12" sm="12" md="6">
+              <CardImg top width="100%" src={yoda} alt="Card image cap" />
+            </Col>
+            <Col
+              xs="12"
+              sm="12"
+              md="6"
+              style={{
+                paddingRight: 0,
+                paddingLeft: 0,
+              }}
+            >
+              <CardBody>
+                <CardTitle tag="h5">
+                  <div>INFORMACIÓN</div>
+                </CardTitle>
+                <CardSubtitle tag="h6" className="mb-2 text-muted">
+                  {qa[cont][contInformation].title}
+                </CardSubtitle>
+                <div
+                  style={{
+                    textAlign: 'justify',
+                    paddingRight: '10px',
+                  }}
+                >
+                  <strong>Procedimiento</strong>
+                  <div>{qa[cont][contInformation].process}</div>
+                  <br />
+                  <strong>Criterios</strong>
+                  <div>{qa[cont][contInformation].criterion}</div>
+                </div>
+              </CardBody>
+              <Button
+                color="primary"
+                type="button"
+                className="button-pixel"
+                onClick={
+                  contInformation === 0 ? nextContInformation : questions
+                }
+              >
+                {contInformation === 0 ? 'Siguiente' : 'Preguntas'}
+              </Button>
+            </Col>
+          </Row>
+        </div>
       </Modal>
       <Modal
         centered
@@ -209,24 +304,26 @@ export default function LevelPage() {
         </ModalHeader>
         <ModalBody>
           <strong>{qa[cont][0].title}</strong>
-          <div>
-            <CustomInput
-              type="select"
-              id="exampleCustomSelect"
-              name="customSelect"
-            >
-              <option value="">Select</option>
-              <option>Value 1</option>
-              <option>Value 2</option>
-              <option>Value 3</option>
-              <option>Value 4</option>
-              <option>Value 5</option>
-            </CustomInput>
-          </div>
+          <Form>
+            <FormGroup tag="fieldset">
+              <FormGroup check>
+                <Label check>
+                  <Input type="radio" name="radio1" /> Option one is this and
+                  that—be sure to include why it's great
+                </Label>
+              </FormGroup>
+              <FormGroup check>
+                <Label check>
+                  <Input type="radio" name="radio1" /> Option two can be
+                  something else and selecting it will deselect option one
+                </Label>
+              </FormGroup>
+            </FormGroup>
+          </Form>
         </ModalBody>
         <ModalFooter>
           <Button color="primary" type="button" onClick={nextLevel}>
-            Preguntas
+            Siguiente
           </Button>
         </ModalFooter>
       </Modal>

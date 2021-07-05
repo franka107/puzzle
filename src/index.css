@@ -118,16 +118,6 @@ html,body{
 	z-index: 4;
 }
 
-input[type=radio]{ position: relative; z-index: 1000; display: none; }
-#play:checked ~ .btn1{
-	background-color: #fafad2;
-}
-#pause:checked ~ .btn2{
-	background-color: #fafad2;
-}
-#stop:checked ~ .btn3{
-	background-color: #fafad2;
-}
 @keyframes sol{
 	0%{ left: -110px; top: 30%; }
 	50%{ left: 50%; top: 5%; background: #FF4500; }
@@ -302,4 +292,37 @@ input[type=radio]{ position: relative; z-index: 1000; display: none; }
 	z-index: 1000;
 	position: relative;
 	margin-top: 5%;
+}
+
+.button-pixel{
+	position: relative;
+	width: 180px;
+	height: 60px;
+	color: #fff;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	line-height: 60px;
+	letter-spacing: 2px;
+	margin: 20px;
+	transition: 0.5s;
+	border-color: #ec0b36 !important;
+	background-color: #111 !important;
+}
+.button-pixel:hover{
+	background: #ec0b36 url(./assets/images/pixel.png);
+	transition-delay: 0.8s;
+	background-size: 180px;
+	animation: animate 0.8s steps(8) forwards ;
+	border-color: #ec0b36 !important;
+	color: #fff;
+}
+@keyframes animate {
+	0% {
+		background-position-y: 0;
+	}
+	100%
+	{
+		background-position-y: -480px;
+	}
 }
