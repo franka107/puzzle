@@ -9,10 +9,6 @@ import Timer from '../components/Timer'
 import {
   Button,
   Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-  Form,
   FormGroup,
   Label,
   Input,
@@ -22,84 +18,26 @@ import {
   CardSubtitle,
   Col,
   Row,
+  Alert,
 } from 'reactstrap'
+import { information, questionsAnswers } from '../constants'
 
 export default function LevelPage() {
-  const questionAnswers = [
-    [
-      {
-        title: 'RESPUESTA DE LANDAU',
-        process:
-          'Suspenda al niño en una posición prona proporcionando apoyo en el abdomen alto con la palma de su mano. Ponga su otra mano en la parte baja de la espalda del niño. Note la posición de la cabeza del niño, tronco y piernas.',
-        criterion:
-          'Una respuesta completa se ve a los 4.5 meses con la extensión de la cabeza, espalda y piernas. Una respuesta incompleta se ve con la extensión solamente de la cabeza o de la espalda. De los 6 a 7 meses, el niño puede inhibir la contestación voluntaria.',
-      },
-      {
-        title: 'CABEZA VERTICAL',
-        process:
-          'Ponga sus manos a nivel del tronco medio, debajo de la axila para prevenir la elevación del hombro. Alce al niño a una posición vertical con las piernas suspendidas en el aire. Note la posición y el control de la cabeza del niño.',
-        criterion:
-          'El control de cabeza en posición vertical es considerado presente si la cabeza se mantiene en una posición neutra sin moverse durante 6 a 10 segundos. La respuesta es considera incompleta si mantuvo la posición durante 3 a 6 segundos y ausente si la mantuvo menos de 3 segundos.',
-      },
-    ],
-    [
-      {
-        title: 'PARACAÍDAS DESCENDENTE DE MIEMBROS INFERIORES',
-        process:
-          'Suspenda al niño en una posición prona proporcionando apoyo en el abdomen alto con la palma de su mano. Ponga su otra mano en la parte baja de la espalda del niño. Note la posición de la cabeza del niño, tronco y piernas.',
-        criterion:
-          'Una respuesta completa se ve a los 4.5 meses con la extensión de la cabeza, espalda y piernas. Una respuesta incompleta se ve con la extensión solamente de la cabeza o de la espalda. De los 6 a 7 meses, el niño puede inhibir la contestación voluntaria.',
-      },
-      {
-        title: 'ENDEREZAMIENTO DE CABEZA',
-        process:
-          'Sostenga al niño en suspensión vertical, incline el cuerpo despacio hacia un lado y luego el otro a un ángulo de 45 grados aproximadamente. Despacio incline al niño hacia adelante y luego hacia atrás. Para un niño con un pobre control de cabeza o un recién nacido prematuro, tenga cuidado para prevenir hiperextensión del cuello cuando lo incline hacia atrás.',
-        criterion:
-          'Una vez inclinado, el niño debe intentar ajustar su cabeza para que permanezca derecho sin tener en cuenta la posición del cuerpo, con los ojos y boca orientados horizontalmente. La respuesta es considerada presente si se ve en las cuatro direcciones de inclinación. Si no observo en cualquier dirección, está ausente. La respuesta es usualmente notada primero cuando se incline al niño hacia adelante, seguido a los costados y finalmente hacia atrás.',
-      },
-    ],
-    [
-      {
-        title: 'EQUILIBRIO EN POSICIÓN PRONA',
-        process:
-          'Eche al niño boca abajo sobre el cojín y despacio incline al niño hacia un lado y luego al otro.',
-        criterion:
-          'Una respuesta completa debe verse a los 5 meses y debe demostrarse una curvatura de la columna con concavidad hacia el lado levantado, abducción de los brazos, piernas, rotación de cabeza y tronco hacia el lao ascendente. Es considerada incompleta si solo encorvamiento del tronco se ve. Es ausente si ninguna de las respuestas se observa.',
-      },
-      {
-        title: 'PROGRESIÓN A 4 PUNTOS',
-        process:
-          'Ponga sus manos a nivel del tronco medio, debajo de la axila para prevenir la elevación del hombro. Alce al niño a una posición vertical con las piernas suspendidas en el aire. Note la posición y el control de la cabeza del niño.',
-        criterion:
-          'Normalmente, el niño de 3 meses de edad se sostendrá en los antebrazos mientras está en posición prona. A los 6 meses, el niño empujara hacia arriba con los brazos extendidos. Una posición de manos y de rodillas es asumida a los 8.5 meses y se arrodillara una superficie a favor a los 9.5 meses de edad. Plantígrado (soporte del peso con las manos y pies) está presente a los 12 meses de edad. El niño puede lograr una posición de pie sin apoyo a los 14 meses.',
-      },
-    ],
-    [
-      {
-        title: 'DES ROTATIVA DE CUERPO EN SUPINO',
-        process:
-          'Ponga al niño en la posición supina y flexione una cadera y rodilla a través del cuerpo para girar el tronco del niño y así rodar de posición supino a prono.',
-        criterion:
-          'Una respuesta completa se demuestra cuando el cuerpo del niño rota la parte superior mientras roda a una posición prona con apoyo de los codos. Una respuesta incompleta se ve con un movimiento de torsión del tronco por el examinador, pero ninguna rotación por el niño. Es ausente cuando la rotación del tronco del niño (leño rodando) no está presente.',
-      },
-      {
-        title: 'ENDEREZAMIENTO DEL CUERPO EN POSCION PRONA',
-        process: 'Eche el niño boca abajo y observa la posición de cabeza.',
-        criterion:
-          'Una reacción completa es vista a los 4 meses de edad con el niño que se sostiene en sus antebrazos o manos y la cabeza se alza a un Angulo de 90 grados de la superficie a favor. Una respuesta incompleta se ve cuando levanta la cabeza solo 45 a 60 grados. Es ausente si se nota un enderezamiento de cabeza momentáneo en la extensión fuera de la superficie a favor.',
-      },
-    ],
-  ]
   const [level, setLevel] = useState(2)
   const [cont, setCont] = useState(0)
   const [contInformation, setContInformation] = useState(0)
   const [showModalInformation, setShowModalInformation] = useState(false)
   const [showModalQuestions, setShowModalQuestions] = useState(false)
   const [next, setNext] = useState(true)
-  const [qa] = useState(questionAnswers)
+  const [qa] = useState(information)
   const timer = useRef(null)
   const withWindow = window.innerWidth
   const [size, setSize] = useState(500)
+  const [questionA, setQuestionA] = useState(questionsAnswers)
+  const [contQuestion, setContQuestion] = useState(0)
+  const [selectOption, setSelectOption] = useState('')
+  const [answerVer, setAnswerVer] = useState('false')
+  const [showAlert, setShowAlert] = useState(false)
 
   useEffect(() => {
     if (withWindow > 390 && withWindow < 650) {
@@ -117,12 +55,21 @@ export default function LevelPage() {
     timer.current.pauseTimer()
   }
 
+  const antInformation = () => {
+    setContInformation(contInformation - 1)
+  }
+
   const nextLevel = () => {
-    setCont(cont + 1)
-    setContInformation(0)
+    if (questionA[cont][contQuestion].answer === selectOption) {
+      alert('contestaste bien')
+    } else {
+      alert('contestaste mal')
+    }
     setShowModalQuestions(false)
+    setCont(cont + 1)
     setNext(true)
-    timer.current.initTimer()
+    setContQuestion(0)
+    setContInformation(0)
   }
 
   const nextContInformation = () => {
@@ -131,25 +78,65 @@ export default function LevelPage() {
   }
 
   const questions = () => {
+    timer.current.initTimer()
     setShowModalInformation(false)
     setShowModalQuestions(true)
+  }
+
+  const nextQuestion = () => {
+    if (questionA[cont][contQuestion].answer !== selectOption) {
+      timer.current.state.actualTime = timer.current.state.actualTime + 40
+      setShowAlert(true)
+      setAnswerVer(
+        'Tu respuesta fue incorrecta, se te penalizara con <strong>30 segundos</strong> en tu marcador'
+      )
+    } else {
+      setShowAlert(true)
+      setAnswerVer('Tu respuesta fue correcta.')
+    }
+    setTimeout(function () {
+      setShowAlert(false)
+    }, 5000)
+    setContQuestion(contQuestion + 1)
+  }
+
+  const onChangeOption = (e) => {
+    setSelectOption(e.target.value)
   }
 
   return (
     <div className="content-game">
       <div className="d-flex justify-content-center game">
         <div>
-          <div>
+          <div className="my-auto">
             <Timer ref={timer} />
           </div>
+          <br />
           <div className="d-flex">
             {level === 2 && next ? (
-              <Puzzle
-                image={level1}
-                onDone={verify}
-                level={level}
-                size={size}
-              />
+              <Row className="mx-3">
+                <Col
+                  xs={12}
+                  sm={12}
+                  md={8}
+                  lg={8}
+                  className="d-flex justify-content-center"
+                >
+                  <Puzzle
+                    image={level1}
+                    onDone={verify}
+                    level={level}
+                    size={size}
+                  />
+                </Col>
+                <Col xs={12} sm={12} md={4} lg={4} className="d-flex">
+                  <img
+                    src={level1}
+                    alt="Hola"
+                    className="img-fluid my-auto pl-0 pr-5 mr-5"
+                  />
+                </Col>
+              </Row>
             ) : (
               <div
                 style={{
@@ -158,32 +145,83 @@ export default function LevelPage() {
               ></div>
             )}
             {level === 3 && next ? (
-              <Puzzle
-                image={level2}
-                onDone={verify}
-                level={level}
-                size={size}
-              />
+              <Row className="mx-3">
+                <Col
+                  xs={12}
+                  sm={12}
+                  md={8}
+                  lg={8}
+                  className="d-flex justify-content-center"
+                >
+                  <Puzzle
+                    image={level2}
+                    onDone={verify}
+                    level={level}
+                    size={size}
+                  />
+                </Col>
+                <Col xs={12} sm={12} md={4} lg={4} className="d-flex">
+                  <img
+                    src={level2}
+                    alt="Hola"
+                    className="img-fluid my-auto pl-0 pr-5 mr-5"
+                  />
+                </Col>
+              </Row>
             ) : (
               ''
             )}
             {level === 4 && next ? (
-              <Puzzle
-                image={level3}
-                onDone={verify}
-                level={level}
-                size={size}
-              />
+              <Row className="mx-3">
+                <Col
+                  xs={12}
+                  sm={12}
+                  md={8}
+                  lg={8}
+                  className="d-flex justify-content-center"
+                >
+                  <Puzzle
+                    image={level3}
+                    onDone={verify}
+                    level={level}
+                    size={size}
+                  />
+                </Col>
+                <Col xs={12} sm={12} md={4} lg={4} className="d-flex">
+                  <img
+                    src={level3}
+                    alt="Hola"
+                    className="img-fluid my-auto pl-0 pr-5 mr-5"
+                  />
+                </Col>
+              </Row>
             ) : (
               ''
             )}
             {level === 5 && next ? (
-              <Puzzle
-                image={level4}
-                onDone={verify}
-                level={level}
-                size={size}
-              />
+              <Row className="mx-3">
+                <Col
+                  xs={12}
+                  sm={12}
+                  md={8}
+                  lg={8}
+                  className="d-flex justify-content-center"
+                >
+                  <Puzzle
+                    image={level4}
+                    onDone={verify}
+                    level={level}
+                    size={size}
+                  />
+                </Col>
+                <Col xs={12} sm={12} md={4} lg={4} className="d-flex">
+                  <img
+                    src={level4}
+                    alt="Hola"
+                    className="img-fluid my-auto pl-0 pr-5 mr-5"
+                  />
+                </Col>
+              </Row>
             ) : (
               ''
             )}
@@ -197,42 +235,95 @@ export default function LevelPage() {
         backdrop="static"
         size="xl"
       >
-        {/* <ModalHeader>
-          <div
-            style={{
-              color: '#000',
-            }}
-          >
-            Informacion
-          </div>
-        </ModalHeader>
-        <ModalBody>
-          <br />
-          <strong>{qa[cont][contInformation].title}</strong>
-          <br />
-          <br />
-          <div  
-            style={{
-              textAlign: 'justify',
-            }}
-          >
-            <strong>Procedimiento</strong>
-            <div>{qa[cont][contInformation].process}</div>
-            <br />
-            <strong>Criterios</strong>
-            <div>{qa[cont][contInformation].criterion}</div>
-          </div>
-          <br />
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            color="primary"
-            type="button"
-            onClick={contInformation === 0 ? nextContInformation : questions}
-          >
-            {contInformation === 0 ? 'Siguiente' : 'Preguntas'}
-          </Button>
-        </ModalFooter> */}
+        <div
+          style={{
+            backgroundColor: '#111',
+            color: '#fff',
+          }}
+        >
+          <Row>
+            <Col
+              xs="12"
+              sm="12"
+              md="6"
+              style={{
+                backgroundColor: '#284548',
+                display: 'flex',
+                alignContent: 'center',
+                padding: 0,
+              }}
+            >
+              <CardImg top width="100%" src={yoda} alt="Card image cap" />
+            </Col>
+            {cont < 4 && (
+              <Col
+                xs="12"
+                sm="12"
+                md="6"
+                style={{
+                  backgroundColor: '#111',
+                }}
+              >
+                <CardBody>
+                  <CardTitle tag="h5">
+                    <div>INFORMACIÓN</div>
+                  </CardTitle>
+                  <CardSubtitle tag="h6" className="mb-2 text-muted">
+                    {qa[cont][contInformation].title}
+                  </CardSubtitle>
+                  <div
+                    style={{
+                      textAlign: 'justify',
+                      paddingRight: '10px',
+                      margin: '12% 0',
+                    }}
+                  >
+                    <strong>Procedimiento</strong>
+                    <div>{qa[cont][contInformation].process}</div>
+                    <br />
+                    <strong>Criterios</strong>
+                    <div>{qa[cont][contInformation].criterion}</div>
+                  </div>
+                </CardBody>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  {contInformation !== 0 && (
+                    <Button
+                      color="primary"
+                      type="button"
+                      className="button-pixel"
+                      onClick={antInformation}
+                    >
+                      Retroceder
+                    </Button>
+                  )}
+                  <Button
+                    color="primary"
+                    type="button"
+                    className="button-pixel"
+                    onClick={
+                      contInformation === 0 ? nextContInformation : questions
+                    }
+                  >
+                    {contInformation === 0 ? 'Siguiente' : 'Preguntas'}
+                  </Button>
+                </div>
+              </Col>
+            )}
+          </Row>
+        </div>
+      </Modal>
+      <Modal
+        centered
+        toggle={() => setShowModalQuestions(!showModalQuestions)}
+        isOpen={showModalQuestions}
+        backdrop="static"
+        size="xl"
+      >
         <div
           style={{
             backgroundColor: '#111',
@@ -244,88 +335,73 @@ export default function LevelPage() {
             <Col xs="12" sm="12" md="6">
               <CardImg top width="100%" src={yoda} alt="Card image cap" />
             </Col>
-            <Col
-              xs="12"
-              sm="12"
-              md="6"
-              style={{
-                paddingRight: 0,
-                paddingLeft: 0,
-              }}
-            >
-              <CardBody>
-                <CardTitle tag="h5">
-                  <div>INFORMACIÓN</div>
-                </CardTitle>
-                <CardSubtitle tag="h6" className="mb-2 text-muted">
-                  {qa[cont][contInformation].title}
-                </CardSubtitle>
+            {cont < 4 && (
+              <Col
+                xs="12"
+                sm="12"
+                md="6"
+                style={{
+                  paddingRight: 0,
+                  paddingLeft: 0,
+                }}
+              >
+                <CardBody>
+                  <CardTitle tag="h5">
+                    <div>PREGUNTAS</div>
+                    {/* <Timer ref={timer} /> */}
+                  </CardTitle>
+                  <CardSubtitle tag="h6" className="mb-2 text-muted">
+                    {questionA[cont][contQuestion].question}
+                  </CardSubtitle>
+                  <div
+                    style={{
+                      textAlign: 'justify',
+                      paddingRight: '10px',
+                    }}
+                  >
+                    <FormGroup tag="fieldset">
+                      {questionA[cont][contQuestion].options.map(
+                        (question, index) => (
+                          <FormGroup check key={index}>
+                            <Label check>
+                              <Input
+                                type="radio"
+                                value={question.id}
+                                checked={selectOption === question.id}
+                                onChange={onChangeOption}
+                              />{' '}
+                              {question.name}
+                            </Label>
+                          </FormGroup>
+                        )
+                      )}
+                    </FormGroup>
+                  </div>
+                </CardBody>
                 <div
                   style={{
-                    textAlign: 'justify',
-                    paddingRight: '10px',
+                    display: 'flex',
+                    justifyContent: 'end',
                   }}
                 >
-                  <strong>Procedimiento</strong>
-                  <div>{qa[cont][contInformation].process}</div>
-                  <br />
-                  <strong>Criterios</strong>
-                  <div>{qa[cont][contInformation].criterion}</div>
+                  <Button
+                    color="primary"
+                    type="button"
+                    className="button-pixel"
+                    onClick={contQuestion === 2 ? nextLevel : nextQuestion}
+                  >
+                    {contQuestion === 2
+                      ? 'Siguiente Nivel'
+                      : 'Siguente Pregunta'}
+                  </Button>
                 </div>
-              </CardBody>
-              <Button
-                color="primary"
-                type="button"
-                className="button-pixel"
-                onClick={
-                  contInformation === 0 ? nextContInformation : questions
-                }
-              >
-                {contInformation === 0 ? 'Siguiente' : 'Preguntas'}
-              </Button>
-            </Col>
+                <Alert color="light" isOpen={showAlert}>
+                  {answerVer}
+                </Alert>
+              </Col>
+            )}
           </Row>
         </div>
-      </Modal>
-      <Modal
-        centered
-        toggle={() => setShowModalQuestions(!showModalQuestions)}
-        isOpen={showModalQuestions}
-        backdrop="static"
-      >
-        <ModalHeader>
-          <div
-            style={{
-              color: '#000',
-            }}
-          >
-            Informacion
-          </div>
-        </ModalHeader>
-        <ModalBody>
-          <strong>{qa[cont][0].title}</strong>
-          <Form>
-            <FormGroup tag="fieldset">
-              <FormGroup check>
-                <Label check>
-                  <Input type="radio" name="radio1" /> Option one is this and
-                  that—be sure to include why it's great
-                </Label>
-              </FormGroup>
-              <FormGroup check>
-                <Label check>
-                  <Input type="radio" name="radio1" /> Option two can be
-                  something else and selecting it will deselect option one
-                </Label>
-              </FormGroup>
-            </FormGroup>
-          </Form>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" type="button" onClick={nextLevel}>
-            Siguiente
-          </Button>
-        </ModalFooter>
       </Modal>
     </div>
   )

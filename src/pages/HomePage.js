@@ -12,9 +12,16 @@ import {
   Jumbotron,
 } from 'reactstrap'
 import Fade from 'react-reveal/Fade'
-import { Router, useHistory } from 'react-router-dom'
+import Load from '../components/Load'
+import { Link, useHistory } from 'react-router-dom'
 import user from '../assets/images/user.png'
 import { useState, useEffect } from 'react'
+import {
+  useTransition,
+  animated,
+  AnimatedProps,
+  useSpringRef,
+} from '@react-spring/web'
 
 export default function HomePage() {
   const races = [
@@ -68,6 +75,8 @@ export default function HomePage() {
     'Otro',
   ].sort()
   const [name, setName] = useState('')
+  const [user, setUser] = useState({})
+  const [start, setStart] = useState(false)
   const [race, setRace] = useState('Administración')
   const [podiumUsers, setPodiumUsers] = useState([])
   const history = useHistory()
@@ -98,7 +107,15 @@ export default function HomePage() {
       },
       (error, response) => {
         if (!error) {
-          history.push('/level', { _id: response.responseJSON._id })
+          history.push({
+            pathname: '/introduction',
+            search: `?_id=${response.responseJSON._id}`,
+            state: {
+              _id: response.responseJSON._id,
+            },
+          })
+          //setStart(true)
+          //setUser(response.responseJSON)
         }
       }
     )
@@ -109,132 +126,137 @@ export default function HomePage() {
       setPodiumUsers(response.responseJSON)
     })
   }, [])
-  return (
-    <div style={{ height: 'calc(100% - 82px)' }}>
-      <div className="container h-100">
-        <div className="row align-items-center h-100">
-          <div className="col-6">
-            <Fade top>
-              <div>
-                <div class="p-6 mb-3 rounded-lg shadow-lg bg-gradient-to-r from-teal-800 to-teal-500">
-                  <h2 class="text-2xl text-center font-bold mb-2 ">
-                    Bienvenido
-                  </h2>
-                  <p class="text-center">
-                    Antes de empezar, bríndanos un poco de tus datos
-                  </p>
-                </div>
-              </div>
-            </Fade>
 
-            <Fade bottom>
-              <div>
-                <div class="p-6 rounded-lg shadow-lg bg-gradient-to-r from-teal-800 to-teal-500">
-                  <Form onSubmit={handleSubmit}>
-                    <FormGroup>
-                      <Label for="name" className="text-white m-2">
-                        Nombre o apodo
-                      </Label>
-                      <Input
-                        type="name"
-                        name="name"
-                        id="name"
-                        onChange={(e) => setName(e.target.value)}
-                        value={name}
-                        placeholder="Petito123 o John Smith"
-                        required
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <Label for="race" className="text-white m-2">
-                        Carrera
-                      </Label>
-                      <Input
-                        type="select"
-                        value={race}
-                        onChange={(e) => setRace(e.target.value)}
-                        name="race"
-                        id="race"
-                        required
-                      >
-                        {races.map((race) => (
-                          <option key={race}>{race}</option>
-                        ))}
-                      </Input>
-                    </FormGroup>
-
-                    <button
-                      type="submit"
-                      class="w-full mt-4 bg-red-400 px-4 py-2 rounded text-gray-200 font-semibold hover:bg-yellow-500 transition duration-200 each-in-out"
-                    >
-                      EMPEZAR!
-                    </button>
-                  </Form>
-                </div>
-              </div>
-            </Fade>
-          </div>
-          <div className="col-6">
-            <Fade right>
-              <div>
-                <div class="p-6 mb-3 rounded-lg shadow-lg bg-gradient-to-r from-teal-500 to-teal-800">
-                  <h2 class="text-2xl text-center font-bold mb-2 ">
-                    Top Ranking
-                  </h2>
-                  <p class="text-center">Los mejores jugadores</p>
-                  <div class="mt-8">
-                    {podiumUsers.map((user, i) => (
-                      <div
-                        key={user._id}
-                        class="mt-8 flex px-4 py-4 justify-between bg-white
-				dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer"
-                      >
-                        <div class="flex justify-between">
-                          <div className="rounded-full bg-yellow-400 h-12 w-12 d-flex justify-center">
-                            <span class=" text-4xl text-center  text-white dark:text-green-200 place-self-center font-bold">
-                              {i + 1}
-                            </span>
-                          </div>
-
-                          <div
-                            class="ml-6 flex flex-col capitalize text-gray-600
-						dark:text-gray-400"
-                          >
-                            <span>Nombre</span>
-                            <span class="mt-2 text-black dark:text-gray-200">
-                              {user.name}
-                            </span>
-                          </div>
-                          <div
-                            class="ml-6 flex flex-col capitalize text-gray-600
-						dark:text-gray-400"
-                          >
-                            <span>Carrera</span>
-                            <span class="mt-2 text-black dark:text-gray-200">
-                              {user.race}
-                            </span>
-                          </div>
-                        </div>
-                        <div class="flex">
-                          <div
-                            class="mr-8 flex flex-col capitalize text-gray-600
-						dark:text-gray-400"
-                          >
-                            <span>Tiempo record</span>
-                            <span class="mt-2 text-green-400 dark:text-green-200">
-                              {format(user.time)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+  if (!start) {
+    return (
+      <div style={{ height: 'calc(100% - 82px)' }}>
+        <div className="container h-100">
+          <div className="row align-items-center h-100">
+            <div className="col-6 col-sm-12 col-lg-6">
+              <Fade top>
+                <div>
+                  <div class="p-6 mb-3 mt-3 rounded-lg shadow-lg bg-gradient-to-r from-teal-800 to-teal-500">
+                    <h2 class="text-2xl text-center font-bold mb-2 ">
+                      Bienvenido
+                    </h2>
+                    <p class="text-center">
+                      Antes de empezar, bríndanos un poco de tus datos
+                    </p>
                   </div>
                 </div>
-              </div>
-            </Fade>
+              </Fade>
+
+              <Fade bottom>
+                <div>
+                  <div class="p-6 rounded-lg shadow-lg bg-gradient-to-r from-teal-800 to-teal-500">
+                    <Form onSubmit={handleSubmit}>
+                      <FormGroup>
+                        <Label for="name" className="text-white m-2">
+                          Nombre o apodo
+                        </Label>
+                        <Input
+                          type="name"
+                          name="name"
+                          id="name"
+                          onChange={(e) => setName(e.target.value)}
+                          value={name}
+                          placeholder="Petito123 o John Smith"
+                          required
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label for="race" className="text-white m-2">
+                          Carrera
+                        </Label>
+                        <Input
+                          type="select"
+                          value={race}
+                          onChange={(e) => setRace(e.target.value)}
+                          name="race"
+                          id="race"
+                          required
+                        >
+                          {races.map((race) => (
+                            <option key={race}>{race}</option>
+                          ))}
+                        </Input>
+                      </FormGroup>
+
+                      <button
+                        type="submit"
+                        class="w-full mt-4 bg-red-400 px-4 py-2 rounded text-gray-200 font-semibold hover:bg-yellow-500 transition duration-200 each-in-out"
+                      >
+                        EMPEZAR!
+                      </button>
+                    </Form>
+                  </div>
+                </div>
+              </Fade>
+            </div>
+            <div className="col-6 col-sm-12 col-lg-6">
+              <Fade right>
+                <div>
+                  <div class="p-6 mb-3 rounded-lg shadow-lg bg-gradient-to-r from-teal-500 to-teal-800">
+                    <h2 class="text-2xl text-center font-bold mb-2 ">
+                      Top Ranking
+                    </h2>
+                    <p class="text-center">Los mejores jugadores</p>
+                    <div class="mt-8">
+                      {podiumUsers.map((user, i) => (
+                        <div
+                          key={user._id}
+                          class="mt-8 flex px-4 py-4 justify-between bg-white
+				dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer"
+                        >
+                          <div class="flex justify-between">
+                            <div className="rounded-full bg-yellow-400 h-12 w-12 d-flex justify-center">
+                              <span class=" text-4xl text-center  text-white dark:text-green-200 place-self-center font-bold">
+                                {i + 1}
+                              </span>
+                            </div>
+
+                            <div
+                              class="ml-6 flex flex-col capitalize text-gray-600
+						dark:text-gray-400"
+                            >
+                              <span>Nombre</span>
+                              <span class="mt-2 text-black dark:text-gray-200">
+                                {user.name}
+                              </span>
+                            </div>
+                            <div
+                              class="ml-6 flex flex-col capitalize text-gray-600
+						dark:text-gray-400"
+                            >
+                              <span>Carrera</span>
+                              <span class="mt-2 text-black dark:text-gray-200">
+                                {user.race}
+                              </span>
+                            </div>
+                          </div>
+                          <div class="flex">
+                            <div
+                              class="mr-8 flex flex-col capitalize text-gray-600
+						dark:text-gray-400"
+                            >
+                              <span>Tiempo record</span>
+                              <span class="mt-2 text-green-400 dark:text-green-200">
+                                {format(user.time)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </Fade>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  } else {
+    return <Load userId={user._id} />
+  }
 }

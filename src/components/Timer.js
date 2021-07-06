@@ -45,7 +45,9 @@ class Timer extends Component {
     return (
       <div className="timer">
         <div className="time">
-          <h2 className="text-center">{this.state.actualTime.toFixed(2)}</h2>
+          <h2 className="text-center">
+            Tu tiempo es de {this.state.actualTime.toFixed(2)} s
+          </h2>
         </div>
         {/* <div className="btns">
           <input

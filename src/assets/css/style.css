@@ -116,11 +116,7 @@ a i {
 img {
   max-width: 100%; }
 
-ul {
-  padding: 0;
-  margin: 0; }
-  ul li {
-    list-style: none; }
+
 
 /*input and button type focus outline disable*/
 input[type="text"]:focus,

@@ -317,6 +317,25 @@ html,body{
 	border-color: #ec0b36 !important;
 	color: #fff;
 }
+.button-pixel:focus{
+	outline: none !important;
+	border-color: #ec0b36 !important;
+	box-shadow: none !important;
+}
+input[type='radio']:checked {
+  	background-color: #ec0b36 !important;
+}
+
+input[type='radio']:after {
+	background: #111 !important;
+}
+
+input[type='radio']:focus {
+	outline: none !important;
+	border-color: #ec0b36 !important;
+	box-shadow: none !important;
+}
+
 @keyframes animate {
 	0% {
 		background-position-y: 0;

@@ -4,6 +4,8 @@ import HomePage from '../pages/HomePage'
 import IntroductionPage from '../pages/IntroductionPage'
 import LevelPage from '../pages/LevelPage'
 import ObjectivePage from '../pages/ObjectivePage'
+import LoadingPage from '../pages/LoadingPage'
+import RankingPage from '../pages/RankingPage'
 
 export default function AppRouter() {
   return (
@@ -21,6 +23,12 @@ export default function AppRouter() {
         </Route>
         <Route exact path="/level">
           <LevelPage />
+        </Route>
+        <Route exact path="/loading">
+          <LoadingPage />
+        </Route>
+        <Route exact path="/ranking">
+          <RankingPage />
         </Route>
         <Route path="*">
           <h1>404 Not found</h1>

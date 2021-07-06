@@ -17,10 +17,10 @@ export default function Navbar() {
           <div className="row">
             <div className="col-lg-12">
               <nav className="navbar navbar-expand-lg navbar-light">
-                <a className="navbar-brand" href="index.html">
+                <Link className="navbar-brand" to="/">
                   <img src="assets/images/logo.png" alt="" />
                   <h1>INALLIM</h1>
-                </a>
+                </Link>
                 <button
                   className="navbar-toggler"
                   type="button"
@@ -67,10 +67,10 @@ export default function Navbar() {
                     </li>
                     */}
                     <li className="nav-item">
-                      <a className="nav-link" href="play.html">
+                      <Link className="nav-link" to="/ranking">
                         RANKING
                         <div className="mr-hover-effect"></div>
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item">
                       <a className="nav-link" href="lottery.html">
