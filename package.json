@@ -2,6 +2,7 @@
   "name": "puzzle",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@craco/craco": "^6.1.2",
     "boostrap": "^2.0.0",
